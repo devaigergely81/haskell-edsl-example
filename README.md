@@ -12,4 +12,46 @@ See the `Example.hs` file for more example streams.
 
 ## Shallow and deep embedding
 
-The project contains two implementations of this streaming language. In case of shallow embedding, executing the streams as Haskell expressions will directly execute the streams. When deep embedding is used, executing the streams as Haskell expressions will build up the abstract syntax tree (AST) of the stream. The AST can be used both for compilation and interpretation.
+The project contains two implementations of this streaming language. In case of shallow embedding, executing the streams as Haskell expressions will directly execute the streams. When deep embedding is used, executing the streams as Haskell expressions will build up the abstract syntax tree (AST) of the stream. The AST can be used both for compilation and interpretation. Streams of this project are compiled to C++.
+
+## Usage
+
+The project has been tested with GHC version 8.0.1.
+
+Using the shallow implementation:
+````
+$ ghci -ishallow Examples.hs 
+*Main> f6
+2
+4
+4
+True
+0
+5
+-3
+False
+...
+````
+
+Using the deep implementation (execution, compilation and compilation to file):
+````
+$ ghci -ideep Examples.hs 
+*Main> execute f6
+2
+4
+4
+True
+0
+5
+-3
+False
+...
+*Main> compile f6
+#include <iostream>
+
+int main() {
+  while(true) {
+...
+}
+*Main> compileToFile f6 "f6.cc"
+````
