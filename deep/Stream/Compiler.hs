@@ -33,8 +33,6 @@ compileToFile str fileName = writeFile fileName $ compile' str
 compile' :: Stream Void -> String
 compile' str =
        "#include <iostream>\n\n"
-    ++ "#define True true\n"
-    ++ "#define False false\n\n"
     ++ "int main() {\n"
     ++ "  while(true) {\n"
     ++ indent 2 (fst (runState (compile'' str) 0))
